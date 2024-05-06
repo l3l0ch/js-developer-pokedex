@@ -6,8 +6,10 @@ const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 // }
 
 
-
 function convertPokemonToHtmlLi(pokemon) {
+    // console.log(pokemon.stats.map((stats) =>{
+    //     console.log(stats.stat.name)
+    // }))
     return `
     <li class="pokemon ${pokemon.type}">
             <span class="number">#${pokemon.num}</span>
@@ -18,40 +20,40 @@ function convertPokemonToHtmlLi(pokemon) {
                     ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
                 </ol>
                     <img src=${pokemon.photo} alt=${pokemon.name}>
+                    
             </div>
-            <button class="info" onclick="stats()">Stats</button>
-    </li>
+        
+            <!-- Botão modal Stats --!>
+            <div class="info">
+            <a href="#demo-${pokemon.num}">Stats</a>
+        </div>
 
-    <!-- modal -->
-    <dialog id="log">
-        <section class="content">
-                <h1>${(pokemon.name).toUpperCase()}</h1>
+
+        <!-- modal  --!>
+            
+            <div id="demo-${pokemon.num}" class="modal">
+                <a class="modalClose" href="#">&times;</a>
                 <h3>Stats:</h3>
-                        Hp:<div class="status hp" style="width: 50px;"></div>
-                        Atk:<div class="status atk"></div>
-                        def:<div class="status def"></div>
-                        Sp. Atack:<div class="status sp-atk"></div>
-                        Sp. Defense:<div class="status sp-defense"></div>              
-            </section>
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg" alt="">   
+                <div class="status">
+                    ${pokemon.stats.map(stats =>
+                        `<div>
+                            ${(stats.stat.name)}
+                            ${(stats.base_stat)}
+                        </div>
+                        <div class="${stats.stat.name}" style="width: ${stats.base_stat}px;"></div>
+                        `
+                        
+                    ).join('')
+                }
+            </div>
+        </div>
 
-            <input type="button" onclick="fechar()" id="fechar" value="Fechar"></input>
-    </dialog>
+                
 
+        <!-- :target - Seleciona um elemento que tenha o ID igual a URL do link--!>
+       
     `
 }
-
-function stats() {
-    const button_modal = document.getElementsByClassName("info");
-    const modal = document.querySelector("dialog");
-
-    modal.showModal();
-}
-const fechar = (() => {
-    const modal = document.querySelector("dialog");
-    modal.close();
-})
-
    
 const listaPokemonsHtml = document.getElementById('pokemonsList');
 var limit = 5; // limite de elementos por pagina
@@ -61,15 +63,19 @@ pokeApi.getPokemons()
     .then(function (pokemonsList = []) {
         // pegando cada elemento de lista e convertando em html li
         // o join ('') troca o separador default da lista por
-        // alguma coisa, no caso nada
+        // espaço em branco, no caso nada
         // listaPokemonsHtml.innerHTML = pokemonsList.map(convertPokemonToHtmlLi).join('')
         for (let i =0; i <pokemonsList.length; i++) {
             listaPokemonsHtml.innerHTML += convertPokemonToHtmlLi(pokemonsList[i]);
+           
         }
+        return listaPokemonsHtml.innerHTML;
+        
         // console.log(pokemonsList[0].types[0].type.name)
 
         // console.log(pokemonsList[0].sprites.front_default)
 })
+
 function page(){
     const prox_page = pokeApi.getPokemons(offset, limit)
         .then(function (pokemonsList){
@@ -118,3 +124,42 @@ function reset(){
     listaPokemonsHtml.innerHTML = prox_page
 }
 
+// function getStats() {
+//     return Promise.all([pokeApi.getPokemons(), pokeApi.getPokemonsLinkStats()]) // Coloque as chamadas de função dentro de um array
+//         .then((results) => { // Ajuste a função de retorno de chamada para receber um único argumento
+//             const pokemons = results[0]; // Resultado da primeira promessa
+//             const stats = results[1]; // Resultado da segunda promessa
+//             const fetchs = stats.map((stat) => {
+//                 return fetch(stat)
+//                     .then(function (response) {
+//                         return response.json()
+//                     })
+//                     .then(function (propriedadesList) { // está acessando as propriedades dos pokes
+//                         return propriedadesList.stats // retornando apenas a propriedade de Status
+//                     })                
+//                     .then((propriedades) => {
+//                         const atributos = propriedades.map((propriedade) => {
+//                             return propriedade.stat;
+//                         });
+//                         const poke = pokemons.map((poke) => {
+//                             return poke;
+//                         })              
+//                         return { atributos, poke };
+//                     });
+//             });
+//             return Promise.all(fetchs); 
+//         })
+//         .then((results) => {
+//             const atributos = results[0];
+//             const poke = results[1];
+//             return { atributos, poke }; // Aqui você pode acessar os resultados de fetchs
+//         }).then(({ atributos, poke }) => {
+//             return { atributos, poke }
+            
+//         })
+// }
+
+// getStats().then(({ atributos, poke }) => {
+//     console.log('Atributos:', atributos);
+//     console.log('Poke:', poke);
+// });

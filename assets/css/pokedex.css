@@ -1,3 +1,55 @@
+.teste{
+    margin-top: 50%;
+}
+.modal {
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    max-width: 150px;
+    max-height: 200px;
+    align-items: center;
+    padding: 1rem;
+    
+}
+
+.modal:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.modal_fechar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    padding: 2.5rem;
+    margin-bottom: 0px;
+}
+.modalClose{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-left: 100px;
+    max-width: 5px;
+    max-height: 5px;
+}
+.modalClose:hover{
+    color: blue;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 12px;
+    box-sizing: 5px;
+}
 .pokemons {
     list-style: none;
     padding: 0;
@@ -10,7 +62,6 @@
     
     
 }
-
 .pokemon {
     /* layout dos cards da lista*/
     margin: 0.5rem;
@@ -150,6 +201,14 @@ ol li .types{
     background-color:  rgba(255, 255, 255, 0.575);
     cursor: pointer;
 }
+/* modal interface*/
+.modal{
+    border-radius: 12px;
+    background-color: white;
+    color: black;
+    width: 300px;
+    margin: auto;
+}
 
 /* MIDEA QUERY */
 /* QUANDO TIVER UM TAMANHO DE 576px A TELA */
@@ -184,4 +243,53 @@ ol li .types{
         height: auto;
         margin: 1rem auto;
     }
+}
+h3{
+    margin-top: 0px;
+    color: rgba(0, 0, 0, 0.738);
+}
+.status{
+    color: rgba(0, 0, 0, 0.738);
+    text-transform: capitalize;
+    text-align: jus;
+
+}
+.hp{
+    border-radius: 12px;
+    height: 2.3px;
+    background-color: rgba(77, 0, 0, 0.692);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+    
+}
+.defense{
+    border-radius: 12px;
+    height: 5px;
+    background-color: rgba(11, 9, 136, 0.692);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+}
+.attack{
+    border-radius: 12px;
+    height: 5px;
+    background-color: rgb(185, 7, 7);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+}
+.special-defense{
+    border-radius: 12px;
+    height: 5px;
+    background-color: rgba(245, 229, 6, 0.692);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+}
+.special-attack{
+    border-radius: 12px;
+    height: 5px;
+    background-color: rgba(82, 149, 226, 0.877);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+}
+.speed{
+    
+    border-radius: 12px;
+    height: 5px;
+    background-color: rgba(240, 242, 192, 0.987);
+    box-shadow: 1px 1px 2px rgb(0, 0, 0)
+
 }
